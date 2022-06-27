@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:59:42 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/23 16:33:37 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/27 16:56:38 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,23 @@ Arguments should be:\n\
 ANSI_COLOR_RESET);
 }
 
-void	error_memory(void)
+void	error_function(char error)
 {
-	printf(ANSI_COLOR_RED "Memory error" ANSI_COLOR_RESET);
+	if (error == 'm')
+		printf(ANSI_COLOR_RED "Memory error\n" ANSI_COLOR_RESET);
+	if (error == 't')
+		printf(ANSI_COLOR_RED "Thread error\n" ANSI_COLOR_RESET);
+}
+
+void	error_mutex_fork_init(t_data *data, int index)
+{
+	int	i;
+
+	i = index - 1;
+	while (i > 0)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i--;
+	}
+	free_all_data(data);
 }

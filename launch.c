@@ -6,15 +6,18 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 17:13:09 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/23 17:45:32 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/27 20:56:44 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	routine(void)
+void	*philo_routine(void *argv)
 {
-	printf("Thread has created");
+	t_philo	*philo;
+
+	philo = (t_philo *)argv;
+	return (EXIT_SUCCESS);
 }
 
 int	launch_simulation(t_data *data)
@@ -24,13 +27,14 @@ int	launch_simulation(t_data *data)
 	i = 0;
 	while (i < data->number_of_philo)
 	{
-		if (pthread_create(&data->threads[i], NULL, (void *)&routine, NULL))
+		if (pthread_create(&data->threads[i], NULL,
+				philo_routine, &data->philo[i]))
 		{
-			// print error
-			// free memory
+			error_function('t');
+			free_all_data(data);
 			return (EXIT_FAILURE);
 		}
-		pthread_detach(data->threads[0]);
+		pthread_detach(data->threads[i]);
 		i++;
 	}
 	return (EXIT_SUCCESS);

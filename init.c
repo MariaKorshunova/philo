@@ -6,42 +6,95 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:13:09 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/23 17:00:25 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/27 20:47:53 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	init_threads(t_data *data)
+static int	malloc_threads_forks(t_data *data)
 {
 	data->threads = (pthread_t *)malloc(data->number_of_philo
 			* sizeof(pthread_t));
 	if (data->threads == NULL)
 	{
-		error_memory();
+		error_function('m');
 		return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);
-}
-
-static int	init_forks(t_data *data)
-{
 	data->forks = (pthread_mutex_t *)malloc(data->number_of_philo
 			* sizeof(pthread_mutex_t));
 	if (data->forks == NULL)
 	{
-		error_memory();
+		error_function('m');
 		free(data->threads);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
 
+static int	malloc_philo(t_data *data)
+{
+	data->philo = (t_philo *)malloc(data->number_of_philo
+			* sizeof(t_philo));
+	if (data->philo == NULL)
+	{
+		error_function('m');
+		free(data->threads);
+		free(data->forks);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+static void	init_philo(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		data->philo[i].id = i;
+		if (i % 2 == 0)
+		{
+			data->philo[i].first_fork
+				= &data->forks[(i + 1) % data->number_of_philo];
+			data->philo[i].second_fork = &data->forks[i];
+		}
+		else
+		{
+			data->philo[i].first_fork = &data->forks[i];
+			data->philo[i].second_fork
+				= &data->forks[(i + 1) % data->number_of_philo];
+		}
+		i++;
+	}
+}
+
+static int	init_mutex(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL))
+		{
+			error_mutex_fork_init(data, i);
+			return (EXIT_FAILURE);
+		}
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
 int	init_simulation(t_data *data)
 {
-	if (init_threads(data))
+	if (malloc_threads_forks(data))
 		return (EXIT_FAILURE);
-	if (init_forks(data))
+	if (malloc_philo(data))
+		return (EXIT_FAILURE);
+	init_philo(data);
+	if (init_mutex(data))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

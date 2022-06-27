@@ -6,7 +6,7 @@
 #    By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 16:43:04 by jmabel            #+#    #+#              #
-#    Updated: 2022/06/23 17:43:44 by jmabel           ###   ########.fr        #
+#    Updated: 2022/06/27 14:35:42 by jmabel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME		=	philo
 HEADER		=	philo.h
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror
+# CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -fsanitize=thread -g
 RM			=	rm -rf
 
 SRCS		=	philo.c		parser.c	init.c\
