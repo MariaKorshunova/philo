@@ -6,25 +6,44 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 19:43:08 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/23 16:03:48 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/28 11:04:17 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static	int	ft_create_nb(const char *str, int *i, long long *nb)
-{
-	size_t			nb_digit;
+static int	atoi_arguments(t_data *data, char **argv);
+static int	ft_atoi_check_not_negative(const char *str);
+static int	ft_create_nb(const char *str, int *i, long long *nb);
 
-	nb_digit = 0;
-	while (str[*i] == '0')
-		(*i)++;
-	while (str[*i] >= '0' && str[*i] <= '9')
+int	parse_arguments(t_data *data, char **argv)
+{
+	if (atoi_arguments(data, argv))
 	{
-		*nb = 10 * (*nb) + str[(*i)++] - '0';
-		nb_digit++;
+		error_arguments();
+		return (EXIT_FAILURE);
 	}
-	return (nb_digit);
+	return (EXIT_SUCCESS);
+}
+
+static int	atoi_arguments(t_data *data, char **argv)
+{
+	data->number_of_philo = ft_atoi_check_not_negative(argv[1]);
+	data->time_to_die = ft_atoi_check_not_negative(argv[2]);
+	data->time_to_eat = ft_atoi_check_not_negative(argv[3]);
+	data->time_to_sleep = ft_atoi_check_not_negative(argv[4]);
+	if (data->number_of_philo <= 0 || data->time_to_die < 0
+		|| data->time_to_eat < 0 || data->time_to_sleep < 0)
+		return (EXIT_FAILURE);
+	if (argv[5])
+	{
+		data->number_of_times_must_eat = ft_atoi_check_not_negative(argv[5]);
+		if (data->number_of_times_must_eat <= 0)
+			return (EXIT_FAILURE);
+	}
+	if (!argv[5])
+		data->number_of_times_must_eat = -1;
+	return (EXIT_SUCCESS);
 }
 
 static int	ft_atoi_check_not_negative(const char *str)
@@ -54,32 +73,17 @@ static int	ft_atoi_check_not_negative(const char *str)
 	return (nb);
 }
 
-static int	atoi_arguments(t_data *data, char **argv)
+static	int	ft_create_nb(const char *str, int *i, long long *nb)
 {
-	data->number_of_philo = ft_atoi_check_not_negative(argv[1]);
-	data->time_to_die = ft_atoi_check_not_negative(argv[2]);
-	data->time_to_eat = ft_atoi_check_not_negative(argv[3]);
-	data->time_to_sleep = ft_atoi_check_not_negative(argv[4]);
-	if (data->number_of_philo <= 0 || data->time_to_die < 0
-		|| data->time_to_eat < 0 || data->time_to_sleep < 0)
-		return (EXIT_FAILURE);
-	if (argv[5])
-	{
-		data->number_of_times_must_eat = ft_atoi_check_not_negative(argv[5]);
-		if (data->number_of_times_must_eat <= 0)
-			return (EXIT_FAILURE);
-	}
-	if (!argv[5])
-		data->number_of_times_must_eat = -1;
-	return (EXIT_SUCCESS);
-}
+	size_t			nb_digit;
 
-int	parse_arguments(t_data *data, char **argv)
-{
-	if (atoi_arguments(data, argv))
+	nb_digit = 0;
+	while (str[*i] == '0')
+		(*i)++;
+	while (str[*i] >= '0' && str[*i] <= '9')
 	{
-		error_arguments();
-		return (EXIT_FAILURE);
+		*nb = 10 * (*nb) + str[(*i)++] - '0';
+		nb_digit++;
 	}
-	return (EXIT_SUCCESS);
+	return (nb_digit);
 }

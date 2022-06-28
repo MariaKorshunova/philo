@@ -6,11 +6,27 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:13:09 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/27 20:47:53 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/28 11:06:40 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static int	malloc_threads_forks(t_data *data);
+static int	malloc_philo(t_data *data);
+static int	init_mutex(t_data *data);
+
+int	init_simulation(t_data *data)
+{
+	if (malloc_threads_forks(data))
+		return (EXIT_FAILURE);
+	if (malloc_philo(data))
+		return (EXIT_FAILURE);
+	init_philo(data);
+	if (init_mutex(data))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
 static int	malloc_threads_forks(t_data *data)
 {
@@ -46,30 +62,6 @@ static int	malloc_philo(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
-static void	init_philo(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->number_of_philo)
-	{
-		data->philo[i].id = i;
-		if (i % 2 == 0)
-		{
-			data->philo[i].first_fork
-				= &data->forks[(i + 1) % data->number_of_philo];
-			data->philo[i].second_fork = &data->forks[i];
-		}
-		else
-		{
-			data->philo[i].first_fork = &data->forks[i];
-			data->philo[i].second_fork
-				= &data->forks[(i + 1) % data->number_of_philo];
-		}
-		i++;
-	}
-}
-
 static int	init_mutex(t_data *data)
 {
 	int	i;
@@ -84,17 +76,5 @@ static int	init_mutex(t_data *data)
 		}
 		i++;
 	}
-	return (EXIT_SUCCESS);
-}
-
-int	init_simulation(t_data *data)
-{
-	if (malloc_threads_forks(data))
-		return (EXIT_FAILURE);
-	if (malloc_philo(data))
-		return (EXIT_FAILURE);
-	init_philo(data);
-	if (init_mutex(data))
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

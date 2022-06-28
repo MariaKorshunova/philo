@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:50:13 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/27 20:57:00 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/28 11:32:02 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_philo
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				number_of_times_must_eat;
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 }	t_philo;
@@ -51,6 +52,9 @@ int		parse_arguments(t_data *data, char **argv);
 /* init.c */
 int		init_simulation(t_data *data);
 
+/* init_philo.c */
+void	init_philo(t_data *data);
+
 /* launch.c */
 int		launch_simulation(t_data *data);
 
@@ -61,5 +65,6 @@ void	free_all_data(t_data *data);
 void	error_arguments(void);
 int		error_invalid_number_arguments(int argc);
 void	error_function(char error);
+void	error_mutex_fork_init(t_data *data, int index);
 
 #endif

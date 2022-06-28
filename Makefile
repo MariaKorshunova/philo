@@ -6,7 +6,7 @@
 #    By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 16:43:04 by jmabel            #+#    #+#              #
-#    Updated: 2022/06/27 14:35:42 by jmabel           ###   ########.fr        #
+#    Updated: 2022/06/28 11:36:58 by jmabel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -fsanitize=thread -g
 RM			=	rm -rf
 
-SRCS		=	philo.c		parser.c	init.c\
+SRCS		=	philo.c		parser.c\
+				init.c		init_philo.c\
 				launch.c\
 				free_data.c	error.c
 
