@@ -6,7 +6,7 @@
 #    By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 16:43:04 by jmabel            #+#    #+#              #
-#    Updated: 2022/06/28 11:36:58 by jmabel           ###   ########.fr        #
+#    Updated: 2022/06/29 19:57:39 by jmabel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ RM			=	rm -rf
 
 SRCS		=	philo.c		parser.c\
 				init.c		init_philo.c\
-				launch.c\
+				launch.c	utils.c\
 				free_data.c	error.c
 
 OBJ			=	$(SRCS:%.c=%.o)
@@ -31,7 +31,7 @@ all			:	$(NAME)
 $(NAME)		:	$(OBJ) 
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
-%.o			:	%.c $(HEADER)
+%.o			:	%.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c  $<  -o $@
 
 .PHONY		:	all clean fclean re

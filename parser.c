@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 19:43:08 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/28 11:04:17 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/29 16:28:39 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	parse_arguments(t_data *data, char **argv)
 {
 	if (atoi_arguments(data, argv))
 	{
+		free(data);
 		error_arguments();
 		return (EXIT_FAILURE);
 	}

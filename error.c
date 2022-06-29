@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:59:42 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/27 16:56:38 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/29 16:43:11 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ Arguments should be:\n\
 ANSI_COLOR_RESET);
 }
 
-void	error_function(char error)
+void	error_description(char error)
 {
 	if (error == 'm')
 		printf(ANSI_COLOR_RED "Memory error\n" ANSI_COLOR_RESET);
