@@ -6,14 +6,13 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 17:13:09 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/29 20:43:59 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/30 13:46:49 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static void	*philo_routine(void *argv);
-static int	stop_simulation(t_data *data);
 
 int	launch_simulation(t_data *data)
 {
@@ -23,6 +22,7 @@ int	launch_simulation(t_data *data)
 	data->time_start = time_stamp();
 	while (i < data->number_of_philo)
 	{
+		data->philo[i].time_last_eat = data->time_start;
 		if (pthread_create(&data->threads[i], NULL,
 				philo_routine, &data->philo[i]))
 		{
@@ -58,32 +58,12 @@ static void	*philo_routine(void *argv)
 		// pthread_mutex_lock(&(philo->data->print));
 		// philo->number_eating += 1;
 		// pthread_mutex_unlock(&(philo->data->print));
-		pthread_mutex_unlock(philo->second_fork);
 		pthread_mutex_unlock(philo->first_fork);
+		pthread_mutex_unlock(philo->second_fork);
 		print_status_philo(philo, "is sleeping");
 		accurate_usleep(philo->time_to_sleep);
+		usleep((philo->time_to_eat / 2 * 1000) * (philo->number_of_philo % 2));
 		print_status_philo(philo, "is thinking");
 	}
 	return (EXIT_SUCCESS);
-}
-
-static int	stop_simulation(t_data *data)
-{
-	int	i;
-
-	while (1)
-	{
-		i = 0;
-		while (i < data->number_of_philo)
-		{
-			//mutex
-			if ((time_stamp() - data->philo[i].time_last_eat) >= data->time_to_die)
-				//философ умер
-				// мьютекс на принт остается залоченным
-				return (-1);
-			//mutex
-			i++;
-		}
-	}
-	return (0);
 }

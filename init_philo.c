@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:53:07 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/29 16:46:05 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/30 11:20:47 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_philo(t_data *data)
 	{
 		data->philo[i].id = i;
 		data->philo[i].data = data;
+		data->philo[i].alive = 1;
 		init_main_info_to_philo(data, &data->philo[i]);
 		init_mutex_to_philo(data, &data->philo[i], i);
 		i++;

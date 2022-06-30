@@ -6,7 +6,7 @@
 #    By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 16:43:04 by jmabel            #+#    #+#              #
-#    Updated: 2022/06/29 19:57:39 by jmabel           ###   ########.fr        #
+#    Updated: 2022/06/30 12:25:46 by jmabel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,14 @@ NAME		=	philo
 HEADER		=	philo.h
 
 CC			=	cc
-# CFLAGS		=	-Wall -Wextra -Werror
-CFLAGS		=	-Wall -Wextra -Werror -fsanitize=thread -g
+CFLAGS		=	-Wall -Wextra -Werror
+# CFLAGS		=	-Wall -Wextra -Werror -fsanitize=thread -g
 RM			=	rm -rf
 
 SRCS		=	philo.c		parser.c\
 				init.c		init_philo.c\
-				launch.c	utils.c\
-				free_data.c	error.c
+				launch.c	stop_simulation.c\
+				utils.c		free_data.c			error.c
 
 OBJ			=	$(SRCS:%.c=%.o)
 

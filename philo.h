@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:50:13 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/29 20:02:11 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/30 11:19:40 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_philo
 	int				time_to_sleep;
 	int				number_of_times_must_eat;
 	int				number_eating;
+	int				alive;
 	long			time_last_eat;
 	long			*time_start;
 	pthread_mutex_t	*first_fork;
@@ -66,6 +67,9 @@ void	init_philo(t_data *data);
 
 /* launch.c */
 int		launch_simulation(t_data *data);
+
+/* stop_simulation */
+int		stop_simulation(t_data *data);
 
 /* utils.c */
 void	print_status_philo(t_philo *philo, char *action);
