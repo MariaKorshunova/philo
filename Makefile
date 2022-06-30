@@ -6,7 +6,7 @@
 #    By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/14 16:43:04 by jmabel            #+#    #+#              #
-#    Updated: 2022/06/30 12:25:46 by jmabel           ###   ########.fr        #
+#    Updated: 2022/06/30 17:06:33 by jmabel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ RM			=	rm -rf
 SRCS		=	philo.c		parser.c\
 				init.c		init_philo.c\
 				launch.c	stop_simulation.c\
-				utils.c		free_data.c			error.c
+				utils.c		error.c
 
 OBJ			=	$(SRCS:%.c=%.o)
 

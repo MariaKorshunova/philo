@@ -6,13 +6,14 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 11:07:57 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/30 12:22:52 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/30 16:33:54 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static int	check_dying(t_data *data, int i);
+static int	check_number_eating(t_data *data);
 
 int	stop_simulation(t_data *data)
 {
@@ -24,11 +25,23 @@ int	stop_simulation(t_data *data)
 		while (i < data->number_of_philo)
 		{
 			pthread_mutex_lock(&(data->print));
+			if (check_number_eating(data))
+				return (1);
 			if (check_dying(data, i))
 				return (1);
 			pthread_mutex_unlock(&(data->print));
 			i++;
 		}
+	}
+	return (0);
+}
+
+static int	check_number_eating(t_data *data)
+{
+	if (data->number_hungry_philo == 0)
+	{
+		printf("All philosophers are full.\n");
+		return (1);
 	}
 	return (0);
 }

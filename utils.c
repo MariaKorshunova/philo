@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:47:15 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/29 20:51:37 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/30 17:06:26 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,27 @@ void	accurate_usleep(int ms)
 	usleep(ms * 920);
 	while (time_stamp() < current_time + (long)ms)
 		usleep(100);
+}
+
+void	free_all_data(t_data *data)
+{
+	free(data->forks);
+	free(data->threads);
+	free(data->philo);
+	free(data);
+}
+
+void	destroy_mutex(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		pthread_mutex_unlock(&data->forks[i]);
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	// pthread_mutex_unlock(&(data->print));
+	pthread_mutex_destroy(&(data->print));
 }

@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 17:13:09 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/30 13:46:49 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/30 16:30:26 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,11 @@ static void	*philo_routine(void *argv)
 		philo->time_last_eat = time_stamp();
 		pthread_mutex_unlock(&(philo->data->print));
 		accurate_usleep(philo->time_to_eat);
-		// pthread_mutex_lock(&(philo->data->print));
-		// philo->number_eating += 1;
-		// pthread_mutex_unlock(&(philo->data->print));
+		pthread_mutex_lock(&(philo->data->print));
+		philo->number_of_times_must_eat--;
+		if (philo->number_of_times_must_eat == 0)
+			philo->data->number_hungry_philo--;
+		pthread_mutex_unlock(&(philo->data->print));
 		pthread_mutex_unlock(philo->first_fork);
 		pthread_mutex_unlock(philo->second_fork);
 		print_status_philo(philo, "is sleeping");

@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:13:09 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/29 16:43:23 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/30 16:28:57 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	init_simulation(t_data *data)
 		return (EXIT_FAILURE);
 	if (init_mutex(data))
 		return (EXIT_FAILURE);
+	data->number_hungry_philo = data->number_of_philo;
 	init_philo(data);
 	return (EXIT_SUCCESS);
 }

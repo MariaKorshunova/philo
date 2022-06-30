@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:47:19 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/29 16:43:28 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/30 17:03:48 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (launch_simulation(data))
 		return (EXIT_FAILURE);
+	destroy_mutex(data);
 	free_all_data(data);
 	return (EXIT_SUCCESS);
 }
