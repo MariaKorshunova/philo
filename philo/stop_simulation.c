@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 11:07:57 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/30 16:33:54 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/07/03 17:23:56 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	check_number_eating(t_data *data)
 
 static int	check_dying(t_data *data, int i)
 {
-	if ((time_stamp() - data->philo[i].time_last_eat) >= data->time_to_die)
+	if ((time_stamp() - data->philo[i].time_last_eat) > data->time_to_die)
 	{
 		pthread_mutex_unlock(&(data->print));
 		data->philo[i].alive = 0;

@@ -6,13 +6,14 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 17:13:09 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/30 16:30:26 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/07/02 20:49:29 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static void	*philo_routine(void *argv);
+static void	philo_eating(t_philo *philo);
 
 int	launch_simulation(t_data *data)
 {
@@ -44,28 +45,33 @@ static void	*philo_routine(void *argv)
 	philo = (t_philo *)argv;
 	if (philo->number_of_philo > 1)
 		usleep((philo->time_to_eat / 2 * 1000) * ((philo->id + 1) % 2));
-	while (1)
+	while (philo->alive && philo->number_of_times_must_eat)
 	{
-		pthread_mutex_lock(philo->first_fork);
-		print_status_philo(philo, "has taken a fork");
-		pthread_mutex_lock(philo->second_fork);
-		print_status_philo(philo, "has taken a fork");
-		print_status_philo(philo, "is eating");
-		pthread_mutex_lock(&(philo->data->print));
-		philo->time_last_eat = time_stamp();
-		pthread_mutex_unlock(&(philo->data->print));
-		accurate_usleep(philo->time_to_eat);
-		pthread_mutex_lock(&(philo->data->print));
-		philo->number_of_times_must_eat--;
-		if (philo->number_of_times_must_eat == 0)
-			philo->data->number_hungry_philo--;
-		pthread_mutex_unlock(&(philo->data->print));
-		pthread_mutex_unlock(philo->first_fork);
-		pthread_mutex_unlock(philo->second_fork);
+		philo_eating(philo);
 		print_status_philo(philo, "is sleeping");
 		accurate_usleep(philo->time_to_sleep);
 		usleep((philo->time_to_eat / 2 * 1000) * (philo->number_of_philo % 2));
 		print_status_philo(philo, "is thinking");
 	}
 	return (EXIT_SUCCESS);
+}
+
+static void	philo_eating(t_philo *philo)
+{
+	pthread_mutex_lock(philo->first_fork);
+	print_status_philo(philo, "has taken a fork");
+	pthread_mutex_lock(philo->second_fork);
+	print_status_philo(philo, "has taken a fork");
+	print_status_philo(philo, "is eating");
+	pthread_mutex_lock(&(philo->data->print));
+	philo->time_last_eat = time_stamp();
+	pthread_mutex_unlock(&(philo->data->print));
+	accurate_usleep(philo->time_to_eat);
+	pthread_mutex_lock(&(philo->data->print));
+	philo->number_of_times_must_eat--;
+	if (philo->number_of_times_must_eat == 0)
+		philo->data->number_hungry_philo--;
+	pthread_mutex_unlock(&(philo->data->print));
+	pthread_mutex_unlock(philo->first_fork);
+	pthread_mutex_unlock(philo->second_fork);
 }

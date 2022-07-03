@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:47:15 by jmabel            #+#    #+#             */
-/*   Updated: 2022/06/30 17:06:26 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/06/30 18:06:42 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,5 @@ void	destroy_mutex(t_data *data)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
-	// pthread_mutex_unlock(&(data->print));
 	pthread_mutex_destroy(&(data->print));
 }
