@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:57:28 by jmabel            #+#    #+#             */
-/*   Updated: 2022/07/03 21:37:16 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/07/04 15:46:47 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	parse_arguments(t_data *data, char **argv)
 int	init_simulation(t_data *data)
 {
 	data->number_of_times_eating = 0;
+	data->is_dead = 0;
+	data->is_full = 0;
 	data->id = -1;
 	if (create_semaphore("print", &data->print, 1))
 		return (EXIT_FAILURE);

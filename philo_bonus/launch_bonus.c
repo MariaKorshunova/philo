@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:50:04 by jmabel            #+#    #+#             */
-/*   Updated: 2022/07/03 21:52:22 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/07/04 17:01:20 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	launch_simulation(t_data *data)
 		return (EXIT_FAILURE);
 	}
 	data->time_start = time_stamp();
-	child_processes(data, pids);
+	if (child_processes(data, pids))
+		return (EXIT_FAILURE);
 	wait_child_processes(data, pids);
 	free(pids);
 	return (EXIT_SUCCESS);
@@ -48,7 +49,7 @@ static int	child_processes(t_data *data, pid_t *pids)
 			error_fork(data, pids);
 			return (EXIT_FAILURE);
 		}
-		else if (pids[i] == 0)
+		if (pids[i] == 0)
 		{
 			data->id = i;
 			data->time_last_eat = time_stamp();
@@ -56,6 +57,7 @@ static int	child_processes(t_data *data, pid_t *pids)
 		}
 		i++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 static void	kill_child_processes(pid_t *pids, int i)

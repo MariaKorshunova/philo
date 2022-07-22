@@ -6,7 +6,7 @@
 /*   By: jmabel <jmabel@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:47:15 by jmabel            #+#    #+#             */
-/*   Updated: 2022/07/03 22:17:03 by jmabel           ###   ########.fr       */
+/*   Updated: 2022/07/04 13:42:33 by jmabel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,16 @@ void	print_status_philo(t_data *data, char *action)
 	sem_post(data->print);
 }
 
-void	create_file_name(char name[], char *prefix, int id)
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (prefix[i])
+	if (s)
 	{
-		name[i] = prefix[i];
-		i++;
+		while (s[i] != '\0')
+			i++;
+		return (i);
 	}
-	
+	return (0);
 }
